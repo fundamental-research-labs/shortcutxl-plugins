@@ -1,0 +1,15 @@
+{
+  "name": "shortcut",
+  "owner": {
+    "name": "Shortcut",
+    "email": "support@shortcut.ai"
+  },
+  "plugins": [
+    {
+      "name": "shortcutxl",
+      "source": "./plugins/shortcutxl",
+      "description": "Control ShortcutXL — an AI-powered Excel agent — from Claude Code",
+      "version": "1.0.0"
+    }
+  ]
+}

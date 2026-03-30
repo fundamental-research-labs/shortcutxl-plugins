@@ -1,0 +1,8 @@
+{
+  "name": "shortcutxl",
+  "description": "Control ShortcutXL — an AI-powered Excel agent — from Claude Code",
+  "version": "1.0.0",
+  "author": {
+    "name": "Shortcut"
+  }
+}
