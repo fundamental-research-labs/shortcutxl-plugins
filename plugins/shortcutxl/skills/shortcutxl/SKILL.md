@@ -20,6 +20,27 @@ An AI agent that lives on your computer and has Excel superpowers.
 
 ## Usage
 
+### Session management (IMPORTANT)
+
+Every `shortcut` invocation prints a `[session:<uuid>]` line in its output. Remember this UUID for follow-up calls.
+
+**First call** — start a new session:
+
+```bash
+shortcut -p "Create a DCF model for AAPL"
+# Output will include: [session:a1b2c3d4-...]
+```
+
+**Follow-up calls** — if the user's request clearly continues the previous task, use `--session <uuid> -p`:
+
+```bash
+shortcut --session a1b2c3d4 -p "Now add a sensitivity table"
+```
+
+`--session` accepts a full UUID or a partial prefix (like a git short hash). It opens that session and appends the new prompt to it — no need for `-c`.
+
+If the user's request is clearly unrelated, start a fresh session (no `--session` flag). **If it's ambiguous, ask the user** whether they want to continue the existing session or start a new one.
+
 ### Run a task (non-interactive)
 
 ```bash
@@ -28,25 +49,13 @@ shortcut -p "Create a DCF model for AAPL"
 
 `-p` / `--print` runs the task and exits. Without it, Shortcut opens an interactive TUI session.
 
-### Continue a session
-
-```bash
-shortcut -c "Now add a sensitivity table"
-```
-
-### Resume a past session
-
-```bash
-shortcut -r
-```
-
 ### Include files in the prompt
 
-Prefix with `@`:
+Prefix with `@` and use absolute paths (paths are resolved relative to the CLI's cwd, not yours):
 
 ```bash
-shortcut -p @data.csv "Import this into Excel and create a pivot table"
-shortcut -p @requirements.md @template.xlsx "Build this spreadsheet"
+shortcut -p @C:/Users/peter/Desktop/data.csv "Import this into Excel and create a pivot table"
+shortcut -p @C:/Users/peter/projects/requirements.md @C:/Users/peter/Desktop/template.xlsx "Build this spreadsheet"
 ```
 
 ### Pipe stdin
@@ -55,12 +64,6 @@ Stdin auto-enables print mode:
 
 ```bash
 echo "Summarize the open workbook" | shortcut
-```
-
-### JSON output (structured)
-
-```bash
-shortcut --mode json --no-session "What formulas are in A1:A10?" 2>/dev/null
 ```
 
 ### Ephemeral (don't save session)
@@ -152,5 +155,7 @@ shortcut uninstall           # Remove registry keys, PATH entry, XLL files
 ## When to use this
 
 Invoke ShortcutXL whenever the user wants to work with Excel or spreadsheets. Claude Code handles code and files; ShortcutXL handles Excel. Run it via `shortcut -p "..."` from bash.
+
+**Session workflow:** The first call prints a `[session:<uuid>]` in the output — remember it. On follow-ups, if the user clearly wants to continue the same task, pass `--session <uuid> -p "..."`. If it's unclear whether they want to continue or start fresh, ask them.
 
 If `shortcut` is not installed, follow the steps in [INSTALLATION.md](INSTALLATION.md).
