@@ -87,6 +87,8 @@ shortcut [options] [@files...] [messages...]
 | `--mode json` | NDJSON event stream |
 | `-c`, `--continue` | Continue most recent session |
 | `-r`, `--resume` | Browse and select a past session |
+| `--agent-mode plan` | Start in plan mode (explores workbook, asks questions, proposes a plan before editing) |
+| `--agent-mode ask` | Start in ask mode (read-only analysis, review, and audit) |
 
 ### Model options
 
@@ -155,6 +157,18 @@ shortcut uninstall           # Remove registry keys, PATH entry, XLL files
 ## When to use this
 
 Invoke ShortcutXL whenever the user wants to work with Excel or spreadsheets. Claude Code handles code and files; ShortcutXL handles Excel. Run it via `shortcut -p "..."` from bash.
+
+**Choosing the right mode:**
+
+- **Default (action)** — Use for direct tasks: "create a DCF", "format this table", "add a chart". This is the default, no flag needed.
+- **`--agent-mode plan`** — Use for complex or ambiguous requests where the agent should explore first: "help me with this workbook", "build a financial model", or when the workbook is large/unfamiliar.
+- **`--agent-mode ask`** — Use for read-only questions: "audit this spreadsheet", "explain these formulas", "review this model for errors". The agent will not modify any cells.
+
+```bash
+shortcut -p "Create a DCF model for AAPL"
+shortcut --agent-mode plan -p "This workbook is a mess, help me fix it"
+shortcut --agent-mode ask -p "Audit this financial model for errors"
+```
 
 **Session workflow:** The first call prints a `[session:<uuid>]` in the output — remember it. On follow-ups, if the user clearly wants to continue the same task, pass `--session <uuid> -p "..."`. If it's unclear whether they want to continue or start fresh, ask them.
 
