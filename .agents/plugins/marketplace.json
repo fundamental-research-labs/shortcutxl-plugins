@@ -1,5 +1,8 @@
 {
   "name": "shortcut",
+  "interface": {
+    "displayName": "Shortcut Plugins"
+  },
   "plugins": [
     {
       "name": "shortcutxl",
