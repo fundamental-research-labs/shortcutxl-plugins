@@ -15,7 +15,8 @@ Then restart Codex.
 ## Install (Claude Code)
 
 ```
-/skill install https://github.com/fundamental-research-labs/shortcutxl-plugins/tree/master/shortcutxl
+/plugin marketplace add fundamental-research-labs/shortcutxl-plugins
+/plugin install shortcutxl@shortcut
 ```
 
 ## Manual install
