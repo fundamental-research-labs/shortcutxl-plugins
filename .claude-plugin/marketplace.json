@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "shortcutxl-plugins",
+  "description": "ShortcutXL plugins for Claude Code — AI agents that control desktop Excel",
+  "owner": {
+    "name": "fundamental-research-labs"
+  },
+  "plugins": [
+    {
+      "name": "shortcutxl",
+      "description": "Run ShortcutXL, an AI Excel agent that controls desktop Excel. Build spreadsheets, analyze data, create financial models, and automate Excel tasks via the shortcut CLI.",
+      "source": "./shortcutxl",
+      "category": "productivity"
+    }
+  ]
+}

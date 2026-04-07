@@ -1,0 +1,7 @@
+{
+  "name": "shortcutxl",
+  "description": "Run ShortcutXL, an AI Excel agent that controls desktop Excel. Build spreadsheets, analyze data, create financial models, and automate Excel tasks via the shortcut CLI.",
+  "author": {
+    "name": "fundamental-research-labs"
+  }
+}

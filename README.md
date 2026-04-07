@@ -29,5 +29,5 @@ Source of truth is `shortcutXL/shortcutxl-plugins/` in the monorepo. To sync to 
 
 ```bash
 cd shortcutXL/shortcutxl-plugins
-cp -r shortcutxl README.md /path/to/shortcutxl-plugins/
+cp -r .claude-plugin shortcutxl README.md /path/to/shortcutxl-plugins/
 ```
