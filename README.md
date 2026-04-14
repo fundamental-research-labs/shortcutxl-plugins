@@ -25,9 +25,9 @@ Copy the `shortcutxl/` directory to `~/.agents/skills/shortcutxl/` and restart y
 
 ## Sync
 
-Source of truth is `shortcutXL/shortcutxl-plugins/` in the monorepo. To sync to the published repo:
+Source of truth is `shortcutXL/plugins/` in the monorepo. To sync to the published repo:
 
 ```bash
-cd shortcutXL/shortcutxl-plugins
-cp -r .claude-plugin shortcutxl README.md /path/to/shortcutxl-plugins/
+cd shortcutXL/plugins
+cp -r .claude-plugin .agents shortcutxl README.md /path/to/shortcutxl-plugins/
 ```

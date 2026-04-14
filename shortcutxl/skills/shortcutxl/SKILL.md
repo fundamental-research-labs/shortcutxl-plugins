@@ -177,4 +177,4 @@ shortcut --agent-mode ask -p "Audit this financial model for errors"
 
 **Session workflow:** The first call prints a `[session:<uuid>]` in the output — remember it. On follow-ups, if the user clearly wants to continue the same task, pass `--session <uuid> -p "..."`. If it's unclear whether they want to continue or start fresh, ask them.
 
-If `shortcut` is not installed, follow the steps in [INSTALLATION.md](references/INSTALLATION.md).
+If `shortcut` is not installed, follow the steps in [INSTALLATION.md](../../references/INSTALLATION.md).

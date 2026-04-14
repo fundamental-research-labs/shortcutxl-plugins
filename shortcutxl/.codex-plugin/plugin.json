@@ -1,0 +1,30 @@
+{
+  "name": "shortcutxl",
+  "version": "1.0.0",
+  "description": "Control ShortcutXL — an AI-powered Excel agent — from Codex",
+  "author": {
+    "name": "Shortcut",
+    "email": "support@shortcut.ai",
+    "url": "https://shortcut.ai"
+  },
+  "homepage": "https://shortcut.ai",
+  "repository": "https://github.com/fundamental-research-labs/shortcutxl-plugins",
+  "license": "MIT",
+  "keywords": ["excel", "spreadsheet", "finance", "data-analysis", "automation"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "ShortcutXL",
+    "shortDescription": "AI-powered Excel agent",
+    "longDescription": "Control desktop Excel from Codex. Build spreadsheets, analyze data, create financial models, run VBA macros, and automate Excel tasks via the shortcut CLI.",
+    "developerName": "Shortcut",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://shortcut.ai",
+    "privacyPolicyURL": "https://shortcut.ai/privacy",
+    "defaultPrompt": [
+      "Use ShortcutXL to create a DCF model for AAPL",
+      "Use ShortcutXL to analyze this spreadsheet"
+    ],
+    "brandColor": "#10A37F"
+  }
+}

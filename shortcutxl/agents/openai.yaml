@@ -1,4 +1,4 @@
 interface:
-  display_name: "ShortcutXL"
-  short_description: "AI-powered Excel agent"
-  default_prompt: "Use ShortcutXL to create a DCF model for AAPL"
+  display_name: 'ShortcutXL'
+  short_description: 'AI-powered Excel agent'
+  default_prompt: 'Use ShortcutXL to create a DCF model for AAPL'
