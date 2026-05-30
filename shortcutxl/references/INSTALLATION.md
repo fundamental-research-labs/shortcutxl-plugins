@@ -31,6 +31,12 @@ First launch runs an automated setup (Git, Python packages, Excel add-in registr
 
 **Important:** First launch must be interactive — do NOT run with `-p`. The user must run `shortcut` in a terminal and follow the prompts.
 
+To authenticate Shortcut from the terminal after setup:
+
+```bash
+shortcut login
+```
+
 ## Running Through Another Agent
 
 After the initial interactive setup, another agent can invoke ShortcutXL through the plugin with commands like:

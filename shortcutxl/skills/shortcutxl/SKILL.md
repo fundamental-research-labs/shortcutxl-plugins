@@ -117,3 +117,11 @@ shortcut --skill C:/Users/peter/skills/debt-model --skip-spreadsheet-permissions
 Every ShortcutXL run prints a `[session:<uuid>]` line. Save that id. For follow-up requests that continue the same workbook task, pass `--session <uuid>`. Start a new session for unrelated work. If continuity is ambiguous, ask the user.
 
 If `shortcut` is not installed, follow the steps in [INSTALLATION.md](../../references/INSTALLATION.md).
+
+If ShortcutXL print mode reports `No models available` or asks for authentication, tell the user to run:
+
+```bash
+shortcut login
+```
+
+Then retry the original ShortcutXL command.
