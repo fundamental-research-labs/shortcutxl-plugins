@@ -10,171 +10,110 @@ metadata:
 
 # ShortcutXL
 
-An AI agent that lives on your computer and has Excel superpowers.
+ShortcutXL is an autonomous Excel agent that controls desktop Excel through the `shortcut` CLI. Use it for spreadsheet work instead of trying to reproduce Excel behavior with Python, CSV edits, or openpyxl.
 
-## Capabilities
+## When to use ShortcutXL
 
-- **Data lives locally** — Workbooks, files, and skills stay on the user's machine.
-- **Multi-workbook operations** — Read and write across multiple open workbooks simultaneously.
-- **Deep feature control** — Pivots, charts, sensitivity tables, iterative recalculations, and more.
-- **VBA access** — Read, write, and run macros. Create VBA modules programmatically.
-- **File system access** — Save to arbitrary paths, open files from disk, export PDFs.
-- **Extensible** — Integrate any API or data source by adding a skill file or a custom tool extension.
-- **User-defined functions (UDFs)** — Custom Excel formulas powered by Python for live data, calculations, or database queries.
-- **External data connections** — ODBC, OLE DB, QueryTables, Power Query.
+Use ShortcutXL whenever the user asks to create, edit, analyze, audit, format, repair, or automate an Excel workbook or spreadsheet model.
 
-## Usage
+ShortcutXL can do deep autonomous spreadsheet work:
 
-### Session management (IMPORTANT)
+- Build and modify full workbooks, financial models, dashboards, charts, pivots, and sensitivity tables.
+- Inspect formulas, workbook structure, named ranges, VBA, formatting, external links, and calculation behavior.
+- Read from and write to multiple open workbooks.
+- Run Python-backed Excel automation through its `execute_code` tool.
+- Run shell/file operations when runtime permission bypass is approved and enabled.
+- Save files, open files, export PDFs, add VBA modules, and work with external data sources.
+- Spawn subagents for larger workbook analysis when runtime permission bypass is approved and enabled.
 
-Every `shortcut` invocation prints a `[session:<uuid>]` line in its output. Remember this UUID for follow-up calls.
+Do not fall back to Python/openpyxl unless ShortcutXL is unavailable or the user explicitly asks not to use it.
 
-**First call** — start a new session:
+## ShortcutXL print-mode usage
 
-```bash
-shortcut -p "Create a DCF model for AAPL"
-# Output will include: [session:a1b2c3d4-...]
-```
+When ShortcutXL is invoked with `-p` / `--print`, ShortcutXL runs non-interactively. Permissions that would normally be approved in the ShortcutXL UI need explicit CLI flags.
 
-**Follow-up calls** — if the user's request clearly continues the previous task, use `--session <uuid> -p`:
+- Always use `-p` / `--print` when invoking ShortcutXL from another agent.
+- Always include `--skip-spreadsheet-permissions` for ShortcutXL print-mode spreadsheet reads/writes. Without it, approval-gated Excel actions can be rejected because no ShortcutXL approval UI is present.
+- Use `--skip-runtime-permissions` only when the task actually needs runtime filesystem or shell access: local file search/open/save/export, shell commands, subagents, VBA/module file work, external data plumbing, or broad workbook cleanup that may cross those boundaries.
+- Before using `--skip-runtime-permissions`, explicitly ask the user to confirm that ShortcutXL may bypass runtime filesystem and shell approvals for this run. After they confirm, include `--skip-runtime-permissions` on every ShortcutXL command for that task.
+- If the task only needs direct workbook read/write operations through Excel, use `--skip-spreadsheet-permissions` without runtime bypass.
+- `/sandbox` and `/permissions` are ShortcutXL interactive concepts. In ShortcutXL print mode, rely on the CLI flags above.
 
-```bash
-shortcut --session a1b2c3d4 -p "Now add a sensitivity table"
-```
+Recommended confirmation wording:
 
-`--session` accepts a full UUID or a partial prefix (like a git short hash). It opens that session and appends the new prompt to it — no need for `-c`.
+> ShortcutXL needs runtime permission bypass so it can search/open files, run shell-backed operations, save/export outputs, and use subagents in this non-interactive print-mode run. Is that approved for this task?
 
-If the user's request is clearly unrelated, start a fresh session (no `--session` flag). **If it's ambiguous, ask the user** whether they want to continue the existing session or start a new one.
-
-### Run a task (non-interactive)
+For direct workbook work that does not need shell/file access, run:
 
 ```bash
-shortcut -p "Create a DCF model for AAPL"
+shortcut --skip-spreadsheet-permissions -p "Create a DCF model for AAPL in the open workbook"
 ```
 
-`-p` / `--print` runs the task and exits. Without it, Shortcut opens an interactive TUI session.
-
-### Include files in the prompt
-
-Prefix with `@` and use absolute paths (paths are resolved relative to the CLI's cwd, not yours):
+After runtime-bypass confirmation, run:
 
 ```bash
-shortcut -p @C:/Users/peter/Desktop/data.csv "Import this into Excel and create a pivot table"
-shortcut -p @C:/Users/peter/projects/requirements.md @C:/Users/peter/Desktop/template.xlsx "Build this spreadsheet"
+shortcut --skip-spreadsheet-permissions --skip-runtime-permissions -p "Create a DCF model for AAPL in the open workbook"
 ```
 
-### Pipe stdin
-
-Stdin auto-enables print mode:
+For follow-ups, reuse the session id printed by ShortcutXL:
 
 ```bash
-echo "Summarize the open workbook" | shortcut
+shortcut --session a1b2c3d4 --skip-spreadsheet-permissions --skip-runtime-permissions -p "Now add a sensitivity table"
 ```
 
-### Ephemeral (don't save session)
+To include files, prefix each absolute path with `@`:
 
 ```bash
-shortcut --no-session -p "Quick calculation: NPV at 10% for these cash flows..."
+shortcut --skip-spreadsheet-permissions --skip-runtime-permissions -p @C:/Users/peter/Desktop/data.csv "Import this data and build a pivot table"
 ```
 
-## CLI Reference
-
-```
-shortcut [options] [@files...] [messages...]
-```
-
-### Modes
-
-| Flag | Description |
-|------|-------------|
-| (default) | Interactive TUI |
-| `-p`, `--print` | Run task, print result, exit |
-| `--mode json` | NDJSON event stream |
-| `-c`, `--continue` | Continue most recent session |
-| `-r`, `--resume` | Browse and select a past session |
-| `--agent-mode plan` | Start in plan mode (explores workbook, asks questions, proposes a plan before editing) |
-| `--agent-mode ask` | Start in ask mode (read-only analysis, review, and audit) |
-
-### Model options
-
-ShortcutXL routes through the Shortcut platform (`agent.shortcut.ai`). Available models:
-
-| Model ID | Name |
-|----------|------|
-| `claude-opus-4-6` | Claude Opus 4.6 |
-| `claude-sonnet-4-6` | Claude Sonnet 4.6 |
-| `gpt-5.4-2026-03-05` | GPT-5.4 |
-
-| Flag | Description |
-|------|-------------|
-| `--model <id>` | Select a model (e.g. `--model claude-sonnet-4-6`) |
-| `--model <id>:<thinking>` | Model with thinking level (e.g. `--model claude-sonnet-4-6:high`) |
-| `--thinking <level>` | `off`, `minimal`, `low`, `medium`, `high`, `xhigh` |
-
-Users switch models interactively via `/model` or Ctrl+L.
-
-### Session options
-
-| Flag | Description |
-|------|-------------|
-| `--session <path>` | Use a specific session file or partial UUID |
-| `--session-dir <dir>` | Custom session storage directory |
-| `--no-session` | Ephemeral mode |
-
-### Tool options
-
-| Flag | Description |
-|------|-------------|
-| `--tools <list>` | Comma-separated built-in tools: `read`, `bash`, `edit`, `write`, `grep`, `find`, `ls` |
-| `--no-tools` | Disable all built-in tools |
-
-### Resource options
-
-| Flag | Description |
-|------|-------------|
-| `--skill <path>` | Load a skill file or directory |
-| `--no-skills` | Disable skill discovery |
-| `-e`, `--extension <source>` | Load an extension |
-| `--no-extensions` | Disable extension discovery |
-
-### Other
-
-| Flag | Description |
-|------|-------------|
-| `--system-prompt <text>` | Replace default system prompt |
-| `--append-system-prompt <text>` | Append to system prompt |
-| `--export <file> [out]` | Export session to HTML |
-| `--verbose` | Verbose startup |
-| `-h`, `--help` | Help |
-| `-v`, `--version` | Version |
-
-### Package management
+For a strictly read-only workbook question where no file or shell access is needed, runtime bypass is optional:
 
 ```bash
-shortcut install <source>    # Install a Shortcut package (npm or git)
-shortcut remove <source>     # Remove a package
-shortcut update              # Update all packages
-shortcut list                # List installed packages
-shortcut config              # Enable/disable package resources
-shortcut uninstall           # Remove registry keys, PATH entry, XLL files
+shortcut --skip-spreadsheet-permissions --agent-mode ask -p "Audit the open workbook and explain formula risks"
 ```
 
-## When to use this
+## Modes
 
-Invoke ShortcutXL whenever the user wants to work with Excel or spreadsheets. Claude Code handles code and files; ShortcutXL handles Excel. Run it via `shortcut -p "..."` from bash.
+Available print-mode `--agent-mode` values:
 
-**Choosing the right mode:**
+- `action` (default): direct workbook changes such as building models, formatting sheets, adding charts, fixing formulas, and writing outputs.
+- `plan`: complex or ambiguous workbook tasks where ShortcutXL should inspect first, propose a plan, and then proceed after approval.
+- `ask`: read-only analysis, audits, explanations, and reviews. It should not modify cells.
 
-- **Default (action)** — Use for direct tasks: "create a DCF", "format this table", "add a chart". This is the default, no flag needed.
-- **`--agent-mode plan`** — Use for complex or ambiguous requests where the agent should explore first: "help me with this workbook", "build a financial model", or when the workbook is large/unfamiliar.
-- **`--agent-mode ask`** — Use for read-only questions: "audit this spreadsheet", "explain these formulas", "review this model for errors". The agent will not modify any cells.
+`manage` is not a print-mode startup mode. `/manage` is an interactive ShortcutXL command for entering orchestration mode.
+
+Examples:
 
 ```bash
-shortcut -p "Create a DCF model for AAPL"
-shortcut --agent-mode plan -p "This workbook is a mess, help me fix it"
-shortcut --agent-mode ask -p "Audit this financial model for errors"
+shortcut --skip-spreadsheet-permissions -p "Format the open workbook and add charts"
+shortcut --skip-spreadsheet-permissions --agent-mode plan -p "Help me clean up this large workbook"
+shortcut --skip-spreadsheet-permissions --agent-mode ask -p "Explain the formulas and flag risks"
 ```
 
-**Session workflow:** The first call prints a `[session:<uuid>]` in the output — remember it. On follow-ups, if the user clearly wants to continue the same task, pass `--session <uuid> -p "..."`. If it's unclear whether they want to continue or start fresh, ask them.
+## ShortcutXL skills and commands
+
+If the user's request includes a ShortcutXL slash command, pass it through inside the prompt. Do not strip it or translate it into your own behavior. Put the slash command at the start of the prompt so ShortcutXL recognizes it.
+
+- `/autonomous <task>`: starts ShortcutXL's autonomous workflow. Pass it through exactly when the user asks for `/autonomous` or clearly wants that ShortcutXL workflow.
+- `/skill:<name> <args>`: explicitly invokes a ShortcutXL skill by name.
+- Other ShortcutXL slash commands: if the user explicitly provides one, pass it through at the start of the prompt.
+
+Examples:
+
+```bash
+shortcut --skip-spreadsheet-permissions --skip-runtime-permissions -p "/autonomous Rebuild this workbook and keep status notes next to the file"
+shortcut --skip-spreadsheet-permissions -p "/skill:financial-modeling Review this DCF"
+```
+
+Use `--skill <path>` when the user provides a local ShortcutXL skill file or directory that must be loaded for this run:
+
+```bash
+shortcut --skill C:/Users/peter/skills/debt-model --skip-spreadsheet-permissions -p "Use this skill to review the open workbook"
+```
+
+## Sessions
+
+Every ShortcutXL run prints a `[session:<uuid>]` line. Save that id. For follow-up requests that continue the same workbook task, pass `--session <uuid>`. Start a new session for unrelated work. If continuity is ambiguous, ask the user.
 
 If `shortcut` is not installed, follow the steps in [INSTALLATION.md](references/INSTALLATION.md).
