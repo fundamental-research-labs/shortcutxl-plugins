@@ -118,10 +118,10 @@ Every ShortcutXL run prints a `[session:<uuid>]` line. Save that id. For follow-
 
 If `shortcut` is not installed, follow the steps in [INSTALLATION.md](../../references/INSTALLATION.md).
 
-If ShortcutXL print mode reports `No models available` or asks for authentication, tell the user to run:
+If ShortcutXL print mode says login is required, do not run `shortcut login` yourself. It blocks while waiting for the user to complete device-code auth. Stop and tell the user to run this in their own terminal:
 
 ```bash
 shortcut login
 ```
 
-Then retry the original ShortcutXL command.
+After the user confirms login is complete, retry the original ShortcutXL command.

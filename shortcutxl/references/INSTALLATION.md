@@ -31,11 +31,13 @@ First launch runs an automated setup (Git, Python packages, Excel add-in registr
 
 **Important:** First launch must be interactive — do NOT run with `-p`. The user must run `shortcut` in a terminal and follow the prompts.
 
-To authenticate Shortcut from the terminal after setup:
+To authenticate Shortcut from the terminal after setup, the user should run:
 
 ```bash
 shortcut login
 ```
+
+This command blocks while waiting for device-code authentication to complete. Agents should not run it inline; they should ask the user to run it in their own terminal, then retry after the user confirms login is complete.
 
 ## Running Through Another Agent
 
