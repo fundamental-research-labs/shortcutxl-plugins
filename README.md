@@ -43,10 +43,10 @@ shortcut --skip-spreadsheet-permissions --skip-runtime-permissions -p "Use subag
 
 ## Sync
 
-Source of truth is `shortcutXL/plugins/` in the monorepo. To sync to the published repo:
+Source of truth is `shortcutXL/runtime/plugins/` in the monorepo. To sync to the published repo:
 
 ```bash
-cd shortcutXL/plugins
+cd shortcutXL/runtime/plugins
 cp -r .claude-plugin .agents shortcutxl README.md /path/to/shortcutxl-plugins/
 ```
 

@@ -11,6 +11,7 @@ metadata:
 # ShortcutXL
 
 ShortcutXL is an autonomous Excel agent that controls desktop Excel through the `shortcut` CLI. Use it for spreadsheet work instead of trying to reproduce Excel behavior with Python, CSV edits, or openpyxl.
+This plugin guidance should be treated as the current bundled ShortcutXL usage reference.
 
 ## When to use ShortcutXL
 
