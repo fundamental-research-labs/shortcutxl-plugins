@@ -1,7 +1,7 @@
 {
   "name": "shortcut",
-  "version": "0.1.3+codex.20260826041321",
-  "description": "Use Shortcut's cloud spreadsheet environment from Codex",
+  "version": "0.1.3+codex.20260826054010",
+  "description": "Connect Shortcut to Codex and verify beta access",
   "author": {
     "name": "Shortcut",
     "email": "support@shortcut.ai",
@@ -10,32 +10,20 @@
   "homepage": "https://shortcut.ai",
   "repository": "https://github.com/fundamental-research-labs/shortcutxl-plugins",
   "license": "MIT",
-  "keywords": [
-    "spreadsheet",
-    "workbook",
-    "excel",
-    "finance",
-    "analysis"
-  ],
+  "keywords": ["shortcut", "connection", "beta"],
   "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Shortcut",
-    "shortDescription": "Cloud spreadsheet tools for Codex",
-    "longDescription": "Create, inspect, update, save, and export cloud-backed Shortcut workbooks from Codex. Work headlessly by default and open the authenticated workbook editor when requested.",
+    "shortDescription": "Connect Shortcut to Codex",
+    "longDescription": "Connect your Shortcut account to Codex and verify that authentication and beta access are active. This Phase 0 package exposes connection status only; workbook tools are not yet included.",
     "developerName": "Shortcut",
     "category": "Productivity",
-    "capabilities": [
-      "Read",
-      "Write"
-    ],
+    "capabilities": ["Read"],
     "websiteURL": "https://shortcut.ai",
     "privacyPolicyURL": "https://shortcut.ai/privacy",
     "termsOfServiceURL": "https://shortcut.ai/terms",
-    "defaultPrompt": [
-      "Use Shortcut to inspect the attached workbook without changing it.",
-      "Use Shortcut to update this workbook and save the result to my Shortcut account."
-    ],
+    "defaultPrompt": ["Use Shortcut to check my connection and beta access."],
     "brandColor": "#10A37F"
   }
 }
