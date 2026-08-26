@@ -47,7 +47,7 @@ Source of truth is `shortcutXL/runtime/plugins/` in the monorepo. To sync to the
 
 ```bash
 cd shortcutXL/runtime/plugins
-cp -r .claude-plugin .agents shortcutxl README.md /path/to/shortcutxl-plugins/
+cp -r .claude-plugin .agents shortcut shortcutxl README.md /path/to/shortcutxl-plugins/
 ```
 
 If you changed install, permissioning, or agent-usage copy in `shortcutXL/runtime/user-docs/`, regenerate the published docs artifacts before shipping:
