@@ -13,11 +13,13 @@ Install the pinned beta marketplace and plugin:
 
 ```bash
 codex plugin marketplace add fundamental-research-labs/shortcutxl-plugins \
-  --ref shortcut-v1-beta-0.1.3-test.7
+  --ref shortcut-v1-beta-0.1.3-test.9
 codex plugin add shortcut@shortcut
+codex mcp login shortcut
 ```
 
-Start a new Codex task and ask:
+Complete the Shortcut sign-in and consent flow, then start a new Codex task and
+ask:
 
 ```text
 Use Shortcut to check my connection and beta access.
