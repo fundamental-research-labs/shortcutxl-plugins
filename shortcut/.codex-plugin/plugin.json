@@ -1,6 +1,6 @@
 {
   "name": "shortcut",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Use Shortcut's cloud spreadsheet environment from Codex",
   "author": {
     "name": "Shortcut",
@@ -12,6 +12,7 @@
   "license": "MIT",
   "keywords": ["spreadsheet", "workbook", "excel", "finance", "analysis"],
   "skills": "./skills/",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Shortcut",
     "shortDescription": "Cloud spreadsheet tools for Codex",
