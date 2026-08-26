@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "shortcut": {
+      "type": "http",
+      "url": "https://shortcut-codex-beta-production.up.railway.app/api/v1/codex/mcp",
+      "oauth_resource": "https://shortcut-codex-beta-production.up.railway.app/api/v1/codex/mcp"
+    }
+  }
+}
