@@ -1,6 +1,6 @@
 {
   "name": "shortcut",
-  "version": "0.1.3",
+  "version": "0.1.3+codex.20260826040633",
   "description": "Use Shortcut's cloud spreadsheet environment from Codex",
   "author": {
     "name": "Shortcut",
@@ -10,7 +10,13 @@
   "homepage": "https://shortcut.ai",
   "repository": "https://github.com/fundamental-research-labs/shortcutxl-plugins",
   "license": "MIT",
-  "keywords": ["spreadsheet", "workbook", "excel", "finance", "analysis"],
+  "keywords": [
+    "spreadsheet",
+    "workbook",
+    "excel",
+    "finance",
+    "analysis"
+  ],
   "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
@@ -19,7 +25,10 @@
     "longDescription": "Create, inspect, update, save, and export cloud-backed Shortcut workbooks from Codex. Work headlessly by default and open the authenticated workbook editor when requested.",
     "developerName": "Shortcut",
     "category": "Productivity",
-    "capabilities": ["Read", "Write"],
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
     "websiteURL": "https://shortcut.ai",
     "privacyPolicyURL": "https://shortcut.ai/privacy",
     "termsOfServiceURL": "https://shortcut.ai/terms",
